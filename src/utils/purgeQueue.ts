@@ -2,7 +2,7 @@ import * as amqp from "amqplib/callback_api";
 
 let queue = 'message_queue';
 
-const deleteQueue = () => {
+export const purgeQueue = () => {
     amqp.connect('amqp://localhost', (err, connection) => {
         if (err) {
             throw err;
@@ -13,9 +13,7 @@ const deleteQueue = () => {
                 throw err;
             }
             
-            channel.deleteQueue(queue);
+            channel.purgeQueue(queue)
         });
     });
-}
-
-deleteQueue();
+};

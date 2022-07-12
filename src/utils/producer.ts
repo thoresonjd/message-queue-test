@@ -1,9 +1,9 @@
 import * as amqp from "amqplib/callback_api";
 
 let queue = 'message_queue';
-let msg = {
+let msg = JSON.stringify({
     test: "this is a test message",
-};
+});
 
 export const produce = () => {
     // Create connections
@@ -20,7 +20,7 @@ export const produce = () => {
 
             // Assert queue and send message to queue
             channel.assertQueue(queue, { durable: true });
-            channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)), { persistent: true });
+            channel.sendToQueue(queue, Buffer.from(msg), { persistent: true });
             console.log(`Message sent: ${msg}`);
         });
     });

@@ -13,7 +13,7 @@ export const purgeQueue = () => {
                 throw err;
             }
             
-            channel.purgeQueue(queue)
+            channel.purgeQueue(queue);
         });
     });
 };

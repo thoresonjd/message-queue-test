@@ -12,8 +12,10 @@ const main = () => {
 
     let command = args[0];
     switch (command) {
-        case 'run':
+        case 'produce':
             produce();
+            break;
+        case 'consume':
             consume();
             break;
         case 'purge':
@@ -25,7 +27,7 @@ const main = () => {
         default:
             throw new UnrecognizedCommandError (
                 'Unrecognized command\n' +
-                'Commands: run | purge |  delete'
+                'Commands: produce | consume | purge |  delete'
             )
     }
 }

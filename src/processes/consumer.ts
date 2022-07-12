@@ -2,7 +2,7 @@ import * as amqp from "amqplib/callback_api";
 
 let queue = 'message_queue';
 
-export const produce = (message: string) => {
+export const consumeMessages = () => {
     // Create connections
     amqp.connect('amqp://localhost', (err, connection) => {
         if (err) {
@@ -14,17 +14,17 @@ export const produce = (message: string) => {
             if (err) {
                 throw err;
             }
-            
-            let msg = JSON.stringify({
-                message: message
-            });
 
             // Assert queue
-            channel.assertQueue(queue, { durable: true });
+            channel.assertQueue(queue, { durable: true })
 
-            // Send message to queue
-            channel.sendToQueue(queue, Buffer.from(msg), { persistent: true });
-            console.log(`Message sent: ${msg}`);
+            // Receive message from queue and dequeue it
+            channel.consume(queue, (msg) => {
+                let message = JSON.parse(msg?.content.toString()!);
+                console.log(`Message received: ${message.message}`);
+            }, {
+                noAck: true
+            });
         });
     });
 }

@@ -1,11 +1,11 @@
-import { produce } from "./producer";
-import { consume } from "./consumer";
+import { produceMessage } from "./producer";
+import { consumeMessages } from "./consumer";
 import { purgeQueue } from "./purgeQueue";
 import { deleteQueue } from "./deleteQueue";
 
 export {
-    produce,
-    consume,
+    produceMessage,
+    consumeMessages,
     purgeQueue,
     deleteQueue
 }

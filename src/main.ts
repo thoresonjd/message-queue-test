@@ -1,4 +1,4 @@
-import { produce, consume, purgeQueue, deleteQueue } from "./utils";
+import { produceMessage, consumeMessages, purgeQueue, deleteQueue } from "./processes";
 import { NumArgsError, UnrecognizedCommandError } from "./exceptions";
 
 let commands = ['produce', 'consume', 'purge', 'delete'];
@@ -33,10 +33,10 @@ const handleArgs = (args: string[]) => {
 const execute = (command: string, message: string) => {
     switch (command) {
         case 'produce':
-            produce(message);
+            produceMessage(message);
             break;
         case 'consume':
-            consume();
+            consumeMessages();
             break;
         case 'purge':
             purgeQueue();
@@ -49,7 +49,7 @@ const execute = (command: string, message: string) => {
 
 const main = () => {
     let args = process.argv.slice(2);
-    handleArgs(args)
+    handleArgs(args);
     execute(args[0], args.slice(1).join(' '));
 }
 

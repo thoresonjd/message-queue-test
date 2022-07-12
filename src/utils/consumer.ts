@@ -1,5 +1,7 @@
 import * as amqp from "amqplib/callback_api";
 
+let queue = 'message_queue';
+
 export const consume = () => {
     // Create connections
     amqp.connect('amqp://localhost', (err, connection) => {
@@ -13,12 +15,10 @@ export const consume = () => {
                 throw err;
             }
 
-            let queue = 'message_queue';
-
             // Assert queue and receive message 
             channel.assertQueue(queue, { durable: true })
             channel.consume(queue, (msg) => {
-                console.log(`Message received: ${msg?.content.toString()}`);
+                console.log(`Message received: ${msg?.content}`);
             });
         });
     });

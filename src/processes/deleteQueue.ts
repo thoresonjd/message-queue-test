@@ -14,6 +14,7 @@ export const deleteQueue = () => {
             }
             
             channel.deleteQueue(queue);
+            console.log(`[x] Queue ${queue} was deleted`);
         });
     });
 }

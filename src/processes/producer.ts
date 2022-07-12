@@ -24,7 +24,7 @@ export const produceMessage = (message: string) => {
 
             // Send message to queue
             channel.sendToQueue(queue, Buffer.from(msg), { persistent: true });
-            console.log(`Message sent: ${msg}`);
+            console.log(`[x] Message sent: ${msg}`);
         });
     });
 }

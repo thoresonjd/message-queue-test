@@ -14,6 +14,7 @@ export const purgeQueue = () => {
             }
             
             channel.purgeQueue(queue);
+            console.log(`[x] Queue ${queue} was purged of all messages`);
         });
     });
 };

@@ -1,11 +1,8 @@
 import * as amqp from "amqplib/callback_api";
 
 let queue = 'message_queue';
-let msg = JSON.stringify({
-    test: "this is a test message",
-});
 
-export const produce = () => {
+export const produce = (message: string) => {
     // Create connections
     amqp.connect('amqp://localhost', (err, connection) => {
         if (err) {
@@ -17,6 +14,10 @@ export const produce = () => {
             if (err) {
                 throw err;
             }
+            
+            let msg = JSON.stringify({
+                message: message
+            });
 
             // Assert queue
             channel.assertQueue(queue, { durable: true });

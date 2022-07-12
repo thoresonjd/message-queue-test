@@ -1,10 +1,39 @@
 import { produce, consume, purgeQueue, deleteQueue } from "./utils";
 import { NumArgsError, UnrecognizedCommandError } from "./exceptions";
 
-const execute = (command: string) => {
+let commands = ['produce', 'consume', 'purge', 'delete'];
+
+const handleArgs = (args: string[]) => {
+    if (args.length < 1) {
+        throw new NumArgsError (
+            'Incorrect number of arguments\n' +
+            'Usage: node main.js <command> <producerMessageIfApplicable\>'
+        );
+    }
+    if (!commands.includes(args[0])) {
+        throw new UnrecognizedCommandError (
+            `Unrecognized command ${args[0]}\n` +
+            'Commands: produce | consume | purge |  delete'
+        );
+    }
+    if (args[0] === 'produce' && args.length === 1) {
+        throw new NumArgsError (
+            'Producer needs a message\n' +
+            'Usage: node main.js produce <message>'
+        );
+    }
+    if (args[0] !== 'produce' && args.length > 1) {
+        throw new NumArgsError (
+            `The ${args[0]} command takes no arguments\n` +
+            `Usage: node main.js ${args[0]}`
+        );
+    }
+}
+
+const execute = (command: string, message: string) => {
     switch (command) {
         case 'produce':
-            produce();
+            produce(message);
             break;
         case 'consume':
             consume();
@@ -15,24 +44,13 @@ const execute = (command: string) => {
         case 'delete':
             deleteQueue();
             break;
-        default:
-            throw new UnrecognizedCommandError (
-                'Unrecognized command\n' +
-                'Commands: produce | consume | purge |  delete'
-            )
     }
 }
 
 const main = () => {
     let args = process.argv.slice(2);
-    if (args.length !== 1) {
-        throw new NumArgsError (
-            'Incorrect number of arguments\n' +
-            'Usage: node main.js <command>'
-        );
-    }
-
-    execute(args[0]);
+    handleArgs(args)
+    execute(args[0], args.slice(1).join(' '));
 }
 
 main();

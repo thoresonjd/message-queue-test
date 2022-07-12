@@ -21,7 +21,7 @@ export const consume = () => {
             // Receive message from queue and dequeue it
             channel.consume(queue, (msg) => {
                 let message = JSON.parse(msg?.content.toString()!);
-                console.log(`Message received: ${message.test}`);
+                console.log(`Message received: ${message.message}`);
             }, {
                 noAck: true
             });

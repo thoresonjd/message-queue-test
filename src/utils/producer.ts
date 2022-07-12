@@ -18,8 +18,10 @@ export const produce = () => {
                 throw err;
             }
 
-            // Assert queue and send message to queue
+            // Assert queue
             channel.assertQueue(queue, { durable: true });
+
+            // Send message to queue
             channel.sendToQueue(queue, Buffer.from(msg), { persistent: true });
             console.log(`Message sent: ${msg}`);
         });

@@ -15,11 +15,15 @@ export const consume = () => {
                 throw err;
             }
 
-            // Assert queue and receive message 
+            // Assert queue
             channel.assertQueue(queue, { durable: true })
+
+            // Receive message from queue and dequeue it
             channel.consume(queue, (msg) => {
                 let message = JSON.parse(msg?.content.toString()!);
                 console.log(`Message received: ${message.test}`);
+            }, {
+                noAck: true
             });
         });
     });

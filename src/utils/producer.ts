@@ -2,7 +2,7 @@ import * as amqp from "amqplib/callback_api";
 
 let queue = 'message_queue';
 let msg = {
-    test: "message",
+    test: "this is a test message",
 };
 
 export const produce = () => {
@@ -20,7 +20,7 @@ export const produce = () => {
 
             // Assert queue and send message to queue
             channel.assertQueue(queue, { durable: true });
-            channel.sendToQueue(queue, Buffer.from(msg.toString()), { persistent: true });
+            channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)), { persistent: true });
             console.log(`Message sent: ${msg}`);
         });
     });

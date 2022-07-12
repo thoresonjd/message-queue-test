@@ -18,7 +18,8 @@ export const consume = () => {
             // Assert queue and receive message 
             channel.assertQueue(queue, { durable: true })
             channel.consume(queue, (msg) => {
-                console.log(`Message received: ${msg?.content}`);
+                let message = JSON.parse(msg?.content.toString()!);
+                console.log(`Message received: ${message.test}`);
             });
         });
     });

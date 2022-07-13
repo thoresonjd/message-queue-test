@@ -26,5 +26,11 @@ export const produceMessage = (message: string) => {
             channel.sendToQueue(queue, Buffer.from(msg), { persistent: true });
             console.log(`[x] Message sent: ${msg}`);
         });
+
+        // Close connection after x amount of time
+        setTimeout(() => {
+            connection.close();
+            process.exit(0);
+        }, 5000);
     });
 }

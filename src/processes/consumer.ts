@@ -3,7 +3,7 @@ import * as amqp from "amqplib/callback_api";
 let queue = 'message_queue';
 
 export const consumeMessages = () => {
-    // Create connections
+    // Create connection
     amqp.connect('amqp://localhost', (err, connection) => {
         if (err) {
             throw err;
